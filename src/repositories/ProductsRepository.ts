@@ -8,7 +8,6 @@ import Product from '../models/Product';
 class ProductRepository extends Repository<Product> {
 
 
-
 }
 
 export default ProductRepository;

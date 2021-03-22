@@ -15,6 +15,7 @@ class CreateProductService {
     const productsRepository = getCustomRepository(ProductRepository)
 
     const product = productsRepository.create({
+
       title,
       description,
       quantity
