@@ -16,7 +16,7 @@ productsRouter.get('/', async (request, response) => {
 
 productsRouter.post('/', async (request, response) => {
   try {
-    const { title, description, quantity } = request.body;
+    const { title, description, quantity, category } = request.body;
 
     const createProduct = new CreateProductService();
 
@@ -24,6 +24,7 @@ productsRouter.post('/', async (request, response) => {
       title,
       description,
       quantity,
+      category
     });
 
     return response.json(product);

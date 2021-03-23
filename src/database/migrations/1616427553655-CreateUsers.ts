@@ -16,7 +16,6 @@ export default class CreateUsers1616427553655 implements MigrationInterface {
           {
             name: 'name',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'email',
@@ -31,7 +30,6 @@ export default class CreateUsers1616427553655 implements MigrationInterface {
           {
             name: 'matricula',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'created_at',
