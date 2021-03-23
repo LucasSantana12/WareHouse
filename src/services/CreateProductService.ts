@@ -4,24 +4,26 @@ import Product from '../models/Product';
 import ProductRepository from '../repositories/ProductsRepository';
 
 interface Request {
-  title: string,
+  title: string;
   description: string;
-  quantity: number
-
+  quantity: number;
 }
 
 class CreateProductService {
-  public async execute({ title, description, quantity }: Request): Promise<Product> {
-    const productsRepository = getCustomRepository(ProductRepository)
+  public async execute({
+    title,
+    description,
+    quantity,
+  }: Request): Promise<Product> {
+    const productsRepository = getCustomRepository(ProductRepository);
 
     const product = productsRepository.create({
-
       title,
       description,
-      quantity
+      quantity,
     });
 
-    await productsRepository.save(product)
+    await productsRepository.save(product);
 
     return product;
   }
