@@ -21,7 +21,7 @@ class Product {
   @Column()
   description: string;
 
-  @Column('int')
+  @Column()
   quantity: number;
 
   @ManyToOne(()=> Category)

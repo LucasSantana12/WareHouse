@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { parseISO } from 'date-fns';
 
-import { getCustomRepository } from 'typeorm';
-import ProductRepository from '../repositories/ProductsRepository';
+import { getCustomRepository, getRepository } from 'typeorm';
+import ProductRepository from '../models/Product';
 import CreateProductService from '../services/CreateProductService';
 
 const productsRouter = Router();
 
 productsRouter.get('/', async (request, response) => {
-  const productsRepository = getCustomRepository(ProductRepository);
+  const productsRepository = getRepository(ProductRepository);
   const products = await productsRepository.find();
 
   return response.json(products);

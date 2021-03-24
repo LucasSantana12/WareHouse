@@ -1,7 +1,7 @@
 import { getCustomRepository, getRepository } from 'typeorm';
 
 import Product from '../models/Product';
-import ProductRepository from '../repositories/ProductsRepository';
+import ProductRepository from '../models/Product';
 import Category from '../models/Category';
 
 interface Request {
@@ -18,8 +18,7 @@ class CreateProductService {
     quantity,
     category
   }: Request): Promise<Product> {
-    const productsRepository = getCustomRepository(ProductRepository);
-    const PR = getRepository(ProductRepository);
+    const productsRepository = getRepository(ProductRepository);
     const categoryRepository = getRepository(Category);
 
     let productCategory = await categoryRepository.findOne({
@@ -34,6 +33,21 @@ class CreateProductService {
 
       await categoryRepository.save(productCategory)
     }
+
+    const checkQtd = await productsRepository.findOne({
+      where:{
+        title
+      }
+    })
+    let productQuatity = checkQtd?.quantity
+    if(checkQtd ){
+      let value = productQuatity! + quantity
+      let product = await productsRepository.update(
+        {title},
+        {quantity: value}
+        );
+        return product;
+      }
 
     const product = productsRepository.create({
       title,

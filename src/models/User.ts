@@ -4,11 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  ManyToOne,
-  JoinTable,
 } from 'typeorm';
-import Product from './Product';
 
 @Entity('users')
 class User {
@@ -27,9 +23,6 @@ class User {
   @Column('int')
   matricula: number;
 
-  @ManyToMany(type => Product)
-  @JoinTable()
-  loans: Product;
 
   @CreateDateColumn()
   created_at: Date;
