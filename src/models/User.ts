@@ -6,9 +6,9 @@ import {
   UpdateDateColumn,
   ManyToMany,
   ManyToOne,
-  JoinTable
+  JoinTable,
 } from 'typeorm';
-import Product from  './Product'
+import Product from './Product';
 
 @Entity('users')
 class User {
@@ -27,9 +27,9 @@ class User {
   @Column('int')
   matricula: number;
 
-  @ManyToOne(type => Product)
+  @ManyToMany(type => Product)
   @JoinTable()
-  loans: Product
+  loans: Product;
 
   @CreateDateColumn()
   created_at: Date;
