@@ -1,5 +1,4 @@
 # fucapi_amox
-amoxarifado
+Application developed to manage a warehouse, of a company (a school in this example), which has the function of lending materials to its customers;
 
 
-Aplicação desenvolvida para ser gerenciamento de um almoxarifado, cuja a função é emprestar materiais
