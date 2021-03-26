@@ -1,11 +1,14 @@
 import { Router } from 'express';
-
 import { getRepository } from 'typeorm';
 import CreateLoanService from '../services/CreateLoanService';
-import Loan from '../models/Loan'
+import Loan from '../models/Loan';
+import ensureAutheticated from '../middlewares/ensureAutheticated'
 const loansRouter = Router();
 
+loansRouter.use(ensureAutheticated)
+
 loansRouter.get('/', async (request, response) => {
+  console.log(request.user)
   const loansRepository = getRepository(Loan);
   const loans = await loansRepository.find();
 

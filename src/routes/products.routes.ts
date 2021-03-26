@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import { parseISO } from 'date-fns';
 
-import { getCustomRepository, getRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import ProductRepository from '../models/Product';
 import CreateProductService from '../services/CreateProductService';
 

@@ -21,6 +21,7 @@ class CreateProductService {
     const productsRepository = getRepository(ProductRepository);
     const categoryRepository = getRepository(Category);
 
+    //Criando a categoria
     let productCategory = await categoryRepository.findOne({
       where:{
         title: category,
@@ -30,25 +31,40 @@ class CreateProductService {
       productCategory = categoryRepository.create({
         title: category,
       });
-
       await categoryRepository.save(productCategory)
     }
+    //-------------------------------------------//
 
+    /**
+     * Se um item com o mesmo nome for adicionado a tabela, uma nova Linha nao sera
+     * criada e sim será atualizado a coluna de quantidade
+     */
     const checkQtd = await productsRepository.findOne({
       where:{
         title
       }
     })
+
     let productQuatity = checkQtd?.quantity
     if(checkQtd ){
       let value = productQuatity! + quantity
-      let product = await productsRepository.update(
+
+      await productsRepository.update(
         {title},
         {quantity: value}
         );
-        return product;
+      let product = await productsRepository.findOne({
+        where: {
+          title,
+        }
+      })
+        return product!;
       }
+    //--------------------------------------------------//
 
+    /**
+     * Criando o produto e salvando
+     */
     const product = productsRepository.create({
       title,
       description,
@@ -58,6 +74,7 @@ class CreateProductService {
 
     await productsRepository.save(product);
 
+    //---------------------------------------//
     return product;
   }
 }

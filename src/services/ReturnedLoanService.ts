@@ -8,7 +8,7 @@ interface Request {
   user_id: string;
   product_id: string;
 }
-class CreateLoanService {
+class ReturnedLoanService {
   public async execute({
     tomb,
     qtd,
@@ -19,13 +19,10 @@ class CreateLoanService {
     const ProductRepository = getRepository(Product);
 
     /**
-     * Regra de negocio para a quantidade de emprestimo.
-     *
-     * se o cliente pedir uma quantidade maior que temos em estoque,
-     * esse erro será apresentado.
-     *
-     * se nao, a tabela de quantidade do produtos será atualizada,
-     * subitraindo o valor pedido pelo ja existente
+     * Regra de negocio para a devolução do material.
+     * Quando o cliente devolver o material,
+     * a quantidade que ele tinha deverar ser
+     * somada com a quantidade do produto pedido
      */
    const checkQtd = await ProductRepository.findOne({
       where:{
@@ -60,4 +57,4 @@ class CreateLoanService {
 
   }
 }
-  export default CreateLoanService;
+  export default ReturnedLoanService;
