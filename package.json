@@ -1,6 +1,6 @@
 {
-  "name": "01-primeiro-projeto-com-nodejs",
-  "version": "1.0.0",
+  "name": "warehouse",
+  "version": "1.1.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
