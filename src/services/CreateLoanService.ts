@@ -3,14 +3,14 @@ import Loan from '../models/Loan';
 import Product from '../models/Product';
 
 interface Request {
-  tomb: number;
+
   qtd: number;
   user_id: string;
   product_id: string;
 }
 class CreateLoanService {
   public async execute({
-    tomb,
+    
     qtd,
     user_id,
     product_id,
@@ -31,24 +31,30 @@ class CreateLoanService {
       where:{
         id:product_id
       }
-    })
-    let productQuatity = checkQtd?.quantity
-    if(productQuatity! < qtd ){
-        throw new Error("Não temos toda essa quantidade de estoque")
+    });
+
+    console.log(checkQtd);
+
+    let productQuatity = checkQtd?.quantity as number
+
+    if(!checkQtd){
+      throw new Error('Produto não encotrado!')
     }
-    else {
-      let value = productQuatity! - qtd
+    if(productQuatity < qtd ){
+        throw new Error("Não temos toda essa quantidade de estoque")
+    }else{
+    
+      let quantity = productQuatity - qtd
 
        await ProductRepository.update(
         {id:product_id},
-        {quantity: value}
-        );
-      };
+        {quantity}
+        );}
+      
   //----------------------------------------------------//
 
   //Criando e salvando o emprestimo
     const loan = loansRepository.create({
-      tomb,
       qtd,
       user_id,
       product_id,

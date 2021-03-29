@@ -18,22 +18,26 @@ class Loan {
 
   @Column()
   tomb: number;
+
   @Column()
   qtd: number;
 
-  @ManyToOne(()=> Product)
-  @JoinColumn({ name: 'product_id'})
-  product: Product
+  @ManyToOne(() => Product)
+  @JoinColumn({ name: 'product_id' })
+  product: Product;
 
   @Column()
   product_id: string;
 
-  @ManyToOne(()=> User)
-  @JoinColumn({ name: 'user_id'})
-  costumer: User
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  costumer: User;
 
   @Column()
   user_id: string;
+
+  @Column()
+  returned: boolean
 
   @CreateDateColumn()
   created_at: Date;

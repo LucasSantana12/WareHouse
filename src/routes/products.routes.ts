@@ -1,19 +1,24 @@
 import { Router } from 'express';
 
 import { getRepository } from 'typeorm';
+
 import ProductRepository from '../models/Product';
+
 import CreateProductService from '../services/CreateProductService';
+
+import ensureAdminAutheticated from '../middlewares/ensureAdminAutheticated';
 
 const productsRouter = Router();
 
 productsRouter.get('/', async (request, response) => {
   const productsRepository = getRepository(ProductRepository);
+
   const products = await productsRepository.find();
 
   return response.json(products);
 });
 
-productsRouter.post('/', async (request, response) => {
+productsRouter.post('/', ensureAdminAutheticated, async (request, response) => {
   try {
     const { title, description, quantity, category } = request.body;
 
@@ -21,9 +26,12 @@ productsRouter.post('/', async (request, response) => {
 
     const product = await createProduct.execute({
       title,
+
       description,
+
       quantity,
-      category
+
+      category,
     });
 
     return response.json(product);

@@ -20,7 +20,9 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error"
+    ],
     "class-methods-use-this": "off",
     "no-useless-constructor": "off",
     "no-unused-vars": "off",
@@ -39,7 +41,6 @@
     //     "format": ["PascalCase"]
     //   }
     // ],
-    "class-methods-use-this":"off",
     "import/extensions": [
       "error",
       "ignorePackages",

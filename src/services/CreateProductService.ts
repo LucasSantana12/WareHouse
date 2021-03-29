@@ -58,7 +58,7 @@ class CreateProductService {
           title,
         }
       })
-        return product!;
+        return product as Product;
       }
     //--------------------------------------------------//
 

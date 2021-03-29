@@ -1,60 +1,58 @@
+import { request } from 'express';
 import { getRepository } from 'typeorm';
 import Loan from '../models/Loan';
 import Product from '../models/Product';
 
 interface Request {
-  tomb: number;
-  qtd: number;
-  user_id: string;
+  id: string;
+  returned: boolean;
   product_id: string;
 }
 class ReturnedLoanService {
-  public async execute({
-    tomb,
-    qtd,
-    user_id,
-    product_id,
-  }: Request): Promise<Loan> {
+  public async update({ returned, product_id, id }: Request): Promise<Loan> {
     const loansRepository = getRepository(Loan);
-    const ProductRepository = getRepository(Product);
+    const productsRepository = getRepository(Product);
 
     /**
-     * Regra de negocio para a devolução do material.
-     * Quando o cliente devolver o material,
-     * a quantidade que ele tinha deverar ser
-     * somada com a quantidade do produto pedido
+     * Somente o admin pode dar como devolvido o material,
+     * a autenticação deverar ser feita atravez de um middleware de verificação
+     * Regra de negocio
+     *
+     * A coluna de loan tem a coluna returned, que é poder default false,
+     * é ela que vamos alterar para verdadeiro e consequentimente,
+     * vamos devover a quantidade emprestada para a tabela de pradutos
+     * na coluna Quantity
      */
-   const checkQtd = await ProductRepository.findOne({
-      where:{
-        id:product_id
-      }
-    })
-    let productQuatity = checkQtd?.quantity
-    if(productQuatity! < qtd ){
-        throw new Error("Não temos toda essa quantidade de estoque")
-    }
-    else {
-      let value = productQuatity! - qtd
 
-       await ProductRepository.update(
-        {id:product_id},
-        {quantity: value}
-        );
-      };
-  //----------------------------------------------------//
-
-  //Criando e salvando o emprestimo
-    const loan = loansRepository.create({
-      tomb,
-      qtd,
-      user_id,
-      product_id,
+    const getProduct = await productsRepository.findOne({
+      where: {
+        id: product_id,
+      },
     });
 
-    await loansRepository.save(loan);
+    if (!getProduct) {
+      throw new Error('Produto não encontrado!');
+    }
 
-    return loan;
+    const getLoan = await loansRepository.findOne({
+      where: {
+        id,
+      },
+    });
 
+    if (!getLoan) {
+      throw new Error('Emprestimo não encontrado!');
+    }
+
+    const quantity = getProduct.quantity + getLoan.qtd;
+
+    await productsRepository.update({ id: product_id }, { quantity });
+    returned = true;
+    const loan = await loansRepository.update({ id }, { returned });
+
+    return ({
+      loan,
+    } as unknown) as Loan;
   }
 }
-  export default ReturnedLoanService;
+export default ReturnedLoanService;

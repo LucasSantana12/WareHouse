@@ -17,6 +17,7 @@ export default class CreateLoan1616611594738 implements MigrationInterface {
             {
               name: 'tomb',
               type: 'integer',
+              isNullable:true
             },
             {
               name: 'qtd',

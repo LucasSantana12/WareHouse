@@ -23,6 +23,8 @@ class User {
   @Column('int')
   matricula: number;
 
+  @Column()
+  admin: boolean;
 
   @CreateDateColumn()
   created_at: Date;
