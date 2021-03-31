@@ -5,6 +5,7 @@ import ReturnedLoanService from '../services/ReturnedLoanService';
 import Loan from '../models/Loan';
 import ensureAutheticated from '../middlewares/ensureAutheticated';
 import ensureAdminAutheticated from '../middlewares/ensureAdminAutheticated';
+import PutTombOnLoanService from '../services/PutTombOnLoanService';
 
 const loansRouter = Router();
 
@@ -57,6 +58,27 @@ loansRouter.patch(
       });
 
       return response.json({ returned: true });
+    } catch (err) {
+      return response.status(400).json({ error: err.message });
+    }
+  },
+);
+
+loansRouter.patch(
+  '/tomb',
+  ensureAdminAutheticated,
+  async (request, response) => {
+    try {
+      const { Loan_id, tomb } = request.body;
+
+      const tombLoan = new PutTombOnLoanService();
+
+      const loan = await tombLoan.exceute({
+        Loan_id,
+        tomb,
+      });
+
+      return response.json(loan);
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
