@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import { getRepository } from 'typeorm';
 import authConfig from '../config/auth';
-import User from '../models/User';
 
 interface TokenPayload {
   iat: number;
@@ -10,13 +8,12 @@ interface TokenPayload {
   sub: string;
 }
 
-export default async function ensureAdminAutheticated(
+export default function ensureAutheticated(
   request: Request,
   response: Response,
   next: NextFunction,
-): Promise<void> {
+): void {
   const authMethod = request.headers.authorization;
-  const userRepository = getRepository(User);
 
   if (!authMethod) {
     throw new Error('JWT Token is missing!!');
@@ -39,20 +36,7 @@ export default async function ensureAdminAutheticated(
     request.user = {
       id: sub,
     };
-    const getCurrentUser = await userRepository.findOne({
-      where: {
-        id: sub,
-      },
-    });
 
-    const getAdmin = getCurrentUser?.admin;
-    console.log(getAdmin);
-
-    if (!getAdmin as boolean) {
-      response.sendStatus(401);
-    }
-
-    console.log(decoded);
     return next();
   } catch {
     throw new Error('Invalid JWT Token');

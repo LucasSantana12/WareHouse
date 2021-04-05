@@ -24,43 +24,34 @@ loansRouter.get('/', ensureAutheticated, async (request, response) => {
 });
 
 loansRouter.post('/', ensureAutheticated, async (request, response) => {
-  try {
-    const { qtd, user_id, product_id } = request.body;
+  const { qtd, user_id, product_id } = request.body;
 
-    const createLoan = new CreateLoanService();
+  const createLoan = new CreateLoanService();
 
-    const loan = await createLoan.execute({
-      qtd,
-      user_id,
-      product_id,
-    });
+  const loan = await createLoan.execute({
+    qtd,
+    user_id,
+    product_id,
+  });
 
-    return response.json(loan);
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
+  return response.json(loan);
 });
 
 loansRouter.patch(
   '/returned/:id',
   ensureAdminAutheticated,
   async (request, response) => {
-    try {
-      const { returned, product_id } = request.body;
-      const { id } = request.params;
+    const { returned, product_id } = request.body;
+    const { id } = request.params;
 
-      const returnedService = new ReturnedLoanService();
+    const returnedService = new ReturnedLoanService();
 
-      await returnedService.update({
-        id,
-        returned,
-        product_id,
-      });
-
-      return response.json({ returned: true });
-    } catch (err) {
-      return response.status(400).json({ error: err.message });
-    }
+    const loan = await returnedService.update({
+      id,
+      returned,
+      product_id,
+    });
+    return response.json(loan);
   },
 );
 
@@ -68,20 +59,16 @@ loansRouter.patch(
   '/tomb',
   ensureAdminAutheticated,
   async (request, response) => {
-    try {
-      const { Loan_id, tomb } = request.body;
+    const { Loan_id, tomb } = request.body;
 
-      const tombLoan = new PutTombOnLoanService();
+    const tombLoan = new PutTombOnLoanService();
 
-      const loan = await tombLoan.exceute({
-        Loan_id,
-        tomb,
-      });
+    const loan = await tombLoan.exceute({
+      Loan_id,
+      tomb,
+    });
 
-      return response.json(loan);
-    } catch (err) {
-      return response.status(400).json({ error: err.message });
-    }
+    return response.json(loan);
   },
 );
 

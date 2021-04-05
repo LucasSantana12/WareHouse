@@ -1,14 +1,12 @@
-import { getCustomRepository, getRepository } from 'typeorm';
-
-import Product from '../models/Product';
-import ProductRepository from '../models/Product';
+import { getRepository } from 'typeorm';
 import Category from '../models/Category';
+import Product from '../models/Product';
 
 interface Request {
   title: string;
   description: string;
   quantity: number;
-  category: string
+  category: string;
 }
 
 class CreateProductService {
@@ -16,51 +14,50 @@ class CreateProductService {
     title,
     description,
     quantity,
-    category
+    category,
   }: Request): Promise<Product> {
-    const productsRepository = getRepository(ProductRepository);
+    const productsRepository = getRepository(Product);
     const categoryRepository = getRepository(Category);
 
-    //Criando a categoria
+    // Criando a categoria
     let productCategory = await categoryRepository.findOne({
-      where:{
+      where: {
         title: category,
-      }
+      },
     });
-    if(!productCategory){
+    if (!productCategory) {
       productCategory = categoryRepository.create({
         title: category,
       });
-      await categoryRepository.save(productCategory)
+      await categoryRepository.save(productCategory);
     }
-    //-------------------------------------------//
+    // -------------------------------------------//
 
     /**
      * Se um item com o mesmo nome for adicionado a tabela, uma nova Linha nao sera
      * criada e sim será atualizado a coluna de quantidade
      */
     const checkQtd = await productsRepository.findOne({
-      where:{
-        title
-      }
-    })
+      where: {
+        title,
+      },
+    });
 
-    let productQuatity = checkQtd?.quantity
-    if(checkQtd ){
-      let value = productQuatity! + quantity
+    const productQuatity = checkQtd?.quantity as number;
 
-      await productsRepository.update(
-        {title},
-        {quantity: value}
-        );
-      let product = await productsRepository.findOne({
+    if (checkQtd) {
+      const value = productQuatity + quantity;
+
+      await productsRepository.update({ title }, { quantity: value });
+      const product = await productsRepository.findOne({
         where: {
           title,
-        }
-      })
-        return product as Product;
-      }
-    //--------------------------------------------------//
+        },
+      });
+
+      return product as Product;
+    }
+    // --------------------------------------------------//
 
     /**
      * Criando o produto e salvando
@@ -69,12 +66,12 @@ class CreateProductService {
       title,
       description,
       quantity,
-      category: productCategory
+      category: productCategory,
     });
 
     await productsRepository.save(product);
 
-    //---------------------------------------//
+    // ---------------------------------------//
     return product;
   }
 }

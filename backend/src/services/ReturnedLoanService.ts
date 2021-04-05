@@ -1,7 +1,7 @@
-import { request } from 'express';
 import { getRepository } from 'typeorm';
 import Loan from '../models/Loan';
 import Product from '../models/Product';
+import AppError from '../error/AppError';
 
 interface Request {
   id: string;
@@ -24,35 +24,29 @@ class ReturnedLoanService {
      * na coluna Quantity
      */
 
-    const getProduct = await productsRepository.findOne({
-      where: {
-        id: product_id,
-      },
-    });
+    const getProduct = await productsRepository.findOne(product_id);
 
     if (!getProduct) {
-      throw new Error('Produto não encontrado!');
+      throw new AppError('Produto não encontrado!', 403);
     }
 
-    const getLoan = await loansRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    const getLoan = await loansRepository.findOne(id);
 
     if (!getLoan) {
-      throw new Error('Emprestimo não encontrado!');
+      throw new AppError('Emprestimo não encontrado!', 403);
     }
 
     const quantity = getProduct.quantity + getLoan.qtd;
+    getProduct.quantity = quantity;
 
-    await productsRepository.update({ id: product_id }, { quantity });
-    returned = true;
-    const loan = await loansRepository.update({ id }, { returned });
+    await productsRepository.save(getProduct);
+    // eslint-disable-next-line no-param-reassign
 
-    return ({
-      loan,
-    } as unknown) as Loan;
+    getLoan.returned = returned;
+
+    const loan = await loansRepository.save(getLoan);
+
+    return loan;
   }
 }
 export default ReturnedLoanService;

@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import AppError from '../error/AppError';
 import Loan from '../models/Loan';
 
 interface Request {
@@ -13,7 +14,7 @@ class PutTombOnLoanService {
     const loan = await loansRepository.findOne(Loan_id);
 
     if (!loan) {
-      throw new Error('Emprestimo nao encotrado');
+      throw new AppError('Emprestimo nao encotrado', 403);
     }
 
     loan.tomb = tomb;
