@@ -23,7 +23,7 @@ loansRouter.get('/', ensureAutheticated, async (request, response) => {
   return response.json(loans);
 });
 
-loansRouter.post('/', ensureAutheticated, async (request, response) => {
+loansRouter.post('/create', ensureAutheticated, async (request, response) => {
   const { qtd, user_id, product_id } = request.body;
 
   const createLoan = new CreateLoanService();
