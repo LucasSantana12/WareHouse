@@ -4,25 +4,28 @@ import backgroundFucapi from '../../assets/background-signin.png';
 
 export const Container = styled.div`
   height: 100vh;
-
   display: flex;
-
   align-items: stretch;
 `;
 
 export const Content = styled.div`
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
 
   place-content: center;
 
   width: 100%;
+
   max-width: 650px;
 
   form {
     margin: 80px 0;
+
     width: 340px;
+
     text-align: center;
 
     h1 {
@@ -31,9 +34,13 @@ export const Content = styled.div`
 
     a {
       color: #f4ede8;
+
       display: block;
+
       margin-top: 24px;
+
       text-decoration: none;
+
       transition: color 0.2s;
 
       &:hover {
@@ -44,16 +51,22 @@ export const Content = styled.div`
 
   > a {
     color: #ffb500;
+
     display: block;
+
     margin-top: 24px;
+
     text-decoration: none;
+
     transition: color 0.2s;
 
     display: flex;
+
     align-items: center;
 
     svg {
       margin-right: 16px;
+
       color: #ffb500;
     }
 
@@ -65,6 +78,8 @@ export const Content = styled.div`
 
 export const Background = styled.div`
   flex: 1;
+
   background: url(${backgroundFucapi}) no-repeat center;
+
   background-size: cover;
 `;

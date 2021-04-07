@@ -1,16 +1,20 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useContext } from 'react';
 import * as Yup from 'yup';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { Container, Content, Background } from './styles';
+import AuthContext from '../../context/AuthContext';
 import getValidationErrors from '../../utils/getValidationErrors';
-
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+
+  const { name } = useContext(AuthContext);
+
+  console.log(name);
 
   const handleSubmit = useCallback(async (data: object) => {
     try {
@@ -18,8 +22,11 @@ const SignIn: React.FC = () => {
 
       const schema = Yup.object().shape({
         email: Yup.string()
+
           .email('Digite um e-mail válido')
+
           .required('E-mail obrigatório'),
+
         password: Yup.string().required('Senha Obrigatoria'),
       });
 
@@ -28,13 +35,16 @@ const SignIn: React.FC = () => {
       });
     } catch (err) {
       const errors = getValidationErrors(err);
+
       formRef.current?.setErrors(errors);
     }
   }, []);
+
   return (
     <Container>
       <Content>
         <h1>Faça seu login</h1>
+
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="email" icon={FiMail} placeholder="E-mail" />
 
@@ -55,6 +65,7 @@ const SignIn: React.FC = () => {
           Criar Conta
         </a>
       </Content>
+
       <Background />
     </Container>
   );
