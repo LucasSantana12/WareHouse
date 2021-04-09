@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.button`
-  background: #ffb500;
+  background: #ffa500;
 
   height: 56px;
 

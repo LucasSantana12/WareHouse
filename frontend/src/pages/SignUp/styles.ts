@@ -26,7 +26,7 @@ export const Content = styled.div`
   max-width: 650px;
 
   form {
-    margin: 80px 0;
+    margin: 40px 0;
 
     width: 340px;
 
@@ -58,7 +58,7 @@ export const Content = styled.div`
 
     display: block;
 
-    margin-top: 24px;
+    margin: 15px 0 15px;
 
     text-decoration: none;
 
@@ -69,7 +69,7 @@ export const Content = styled.div`
     align-items: center;
 
     svg {
-      margin-right: 16px;
+      margin-right: 12px;
 
       color: #f4ede8;
     }

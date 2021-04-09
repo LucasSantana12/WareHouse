@@ -22,7 +22,7 @@ export const Content = styled.div`
   max-width: 650px;
 
   form {
-    margin: 80px 0;
+    margin: 40px 0;
 
     width: 340px;
 
