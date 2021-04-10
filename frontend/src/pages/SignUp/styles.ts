@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { shade } from 'polished';
 
@@ -24,7 +24,28 @@ export const Content = styled.div`
   width: 100%;
 
   max-width: 650px;
+`;
+const appearFromRight = keyframes`
+  from{
+    opacity:0;
+    transform: translateX(50px)
+  };
+  to{
+    opacity:1;
+    transform: translateX(0px)
+  }
+`;
 
+export const AnimationContainer = styled.div`
+  animation: ${appearFromRight} 1s;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  place-content: center;
   form {
     margin: 40px 0;
 
@@ -54,11 +75,11 @@ export const Content = styled.div`
   }
 
   > a {
-    color: #f4ede8;
+    color: #ffb500;
 
     display: block;
 
-    margin: 15px 0 15px;
+    margin-top: 24px;
 
     text-decoration: none;
 
@@ -69,13 +90,13 @@ export const Content = styled.div`
     align-items: center;
 
     svg {
-      margin-right: 12px;
+      margin-right: 16px;
 
-      color: #f4ede8;
+      color: #ffb500;
     }
 
     &:hover {
-      color: ${shade(0.2, '#f4ede8')};
+      color: ${shade(0.2, '#ffb500')};
     }
   }
 `;

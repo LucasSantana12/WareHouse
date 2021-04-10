@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 import backgroundFucapi from '../../assets/background-signin.png';
 
@@ -20,7 +20,28 @@ export const Content = styled.div`
   width: 100%;
 
   max-width: 650px;
+`;
+const appearFromLeft = keyframes`
+  from{
+    opacity:0;
+    transform: translateX(-50px)
+  };
+  to{
+    opacity:1;
+    transform: translateX(0px)
+  }
+`;
 
+export const AnimationContainer = styled.div`
+  animation: ${appearFromLeft} 1s;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  place-content: center;
   form {
     margin: 40px 0;
 
@@ -75,7 +96,6 @@ export const Content = styled.div`
     }
   }
 `;
-
 export const Background = styled.div`
   flex: 1;
 
