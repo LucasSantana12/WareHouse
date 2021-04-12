@@ -1,24 +1,21 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
-import CreateLoanService from '../services/CreateLoanService';
-import ReturnedLoanService from '../services/ReturnedLoanService';
-import Loan from '../models/Loan';
+import CreateLoanService from '../../modules/loans/services/CreateLoanService';
+import ReturnedLoanService from '../../modules/loans/services/ReturnedLoanService';
+import Loan from '../../modules/loans/entities/Loan';
 import ensureAutheticated from '../middlewares/ensureAutheticated';
 import ensureAdminAutheticated from '../middlewares/ensureAdminAutheticated';
-import PutTombOnLoanService from '../services/PutTombOnLoanService';
+import PutTombOnLoanService from '../../modules/loans/services/PutTombOnLoanService';
 
 const loansRouter = Router();
 
 loansRouter.get('/', ensureAutheticated, async (request, response) => {
-  console.log(request.user);
-
   const loansRepository = getRepository(Loan);
   const loans = await loansRepository.findOne({
     where: {
       user_id: request.user.id,
     },
   });
-  console.log(loans);
 
   return response.json(loans);
 });

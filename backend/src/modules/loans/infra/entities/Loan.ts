@@ -8,8 +8,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Product from './Product';
-import User from './User';
+import Product from '../../products/entities/Product';
+import User from '../../users/entities/User';
 
 @Entity('loans')
 class Loan {
@@ -37,7 +37,7 @@ class Loan {
   user_id: string;
 
   @Column()
-  returned: boolean
+  returned: boolean;
 
   @CreateDateColumn()
   created_at: Date;

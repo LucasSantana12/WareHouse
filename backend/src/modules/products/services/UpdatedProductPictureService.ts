@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
-import Product from '../models/Product';
-import uploadConfig from '../config/upload';
+import uploadConfig from '../../../config/upload';
+import Product from '../entities/Product';
 
 interface Request {
   product_id: string;

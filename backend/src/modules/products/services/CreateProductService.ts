@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
-import Category from '../models/Category';
-import Product from '../models/Product';
+import Category from '../../categories/entities/Category';
+import Product from '../entities/Product';
 
 interface Request {
   title: string;
