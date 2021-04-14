@@ -8,8 +8,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Product from '../../products/entities/Product';
-import User from '../../users/entities/User';
+import Product from '@modules/products/infra/typeorm/entities/Product';
+import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('loans')
 class Loan {

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import productsRouter from './products.routes';
-import userRouter from './users.routes';
-import sessionsRouter from './sessions.routes';
-import loanRouter from './loans.routes';
+import productsRouter from '@modules/products/infra/http/routes/products.routes';
+import userRouter from '@modules/users/infra/http/routes/users.routes';
+import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
+import loanRouter from '@modules/loans/infra/http/routes/loans.routes';
 
 const routes = Router();
 

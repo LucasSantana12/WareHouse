@@ -6,12 +6,12 @@
   "password": "docker",
   "database": "amox",
   "entities": [
-    "./src/models/*.ts"
+    "./src/modules/**/infra/typeorm/entities/*.ts"
   ],
   "migrations": [
-		"./src/database/migrations/*.ts"
-	],
-	"cli": {
-		"migrationsDir": "./src/database/migrations"
-	}
+    "./src/shared/infra/typeorm/migrations/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "./src/shared/infra/typeorm/migrations"
+  }
 }

@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
-import CreateLoanService from '../../modules/loans/services/CreateLoanService';
-import ReturnedLoanService from '../../modules/loans/services/ReturnedLoanService';
-import Loan from '../../modules/loans/entities/Loan';
-import ensureAutheticated from '../middlewares/ensureAutheticated';
-import ensureAdminAutheticated from '../middlewares/ensureAdminAutheticated';
-import PutTombOnLoanService from '../../modules/loans/services/PutTombOnLoanService';
+import CreateLoanService from '@modules/loans/services/CreateLoanService';
+import ReturnedLoanService from '@modules/loans/services/ReturnedLoanService';
+import Loan from '@modules/loans/infra/typeorm/entities/Loan';
+import ensureAutheticated from '@modules/users/infra/http/middlewares/ensureAutheticated';
+import ensureAdminAutheticated from '@modules/users/infra/http/middlewares/ensureAdminAutheticated';
+import PutTombOnLoanService from '@modules/loans/services/PutTombOnLoanService';
 
 const loansRouter = Router();
 

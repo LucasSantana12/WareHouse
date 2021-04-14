@@ -1,7 +1,12 @@
-import {MigrationInterface, QueryRunner, TableColumn, TableForeignKey} from "typeorm";
+import {
+  MigrationInterface,
+  QueryRunner,
+  TableColumn,
+  TableForeignKey,
+} from 'typeorm';
 
-export default class AddFKOnLoansTable1616612213129 implements MigrationInterface {
-
+export default class AddFKOnLoansTable1616612213129
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'loans',
@@ -52,5 +57,4 @@ export default class AddFKOnLoansTable1616612213129 implements MigrationInterfac
     await queryRunner.dropColumn('loans', 'product_id');
     await queryRunner.dropColumn('loans', 'user_id');
   }
-
 }

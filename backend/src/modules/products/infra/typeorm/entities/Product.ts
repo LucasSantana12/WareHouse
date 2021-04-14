@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Category from '../../categories/entities/Category';
+import Category from '@modules/categories/infra/typeorm/entities/Category';
 
 @Entity('products')
 class Product {

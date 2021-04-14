@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
+import Product from '@modules/products/infra/typeorm/entities/Product';
 import AppError from '../../../shared/error/AppError';
-import Product from '../entities/Product';
 
 interface Request {
   product_id: string;

@@ -4,14 +4,13 @@ import cors from 'cors';
 import 'express-async-errors';
 
 import uploadConfig from '@config/upload';
-import routes from './shared/routes';
-
-import './typeorm';
-import AppError from '../error/AppError';
+import AppError from '@shared/error/AppError';
+import routes from '../routes';
+import '@shared/infra/typeorm';
 
 const app = express();
-app.use(cors());
 
+app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);

@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
-import Loan from '../entities/Loan';
-import Product from '../../products/entities/Product';
-import AppError from '../../../shared/error/AppError';
+import Loan from '@modules/loans/infra/typeorm/entities/Loan';
+import Product from '@modules/products/infra/typeorm/entities/Product';
+import AppError from '@shared/error/AppError';
 
 interface Request {
   id: string;
