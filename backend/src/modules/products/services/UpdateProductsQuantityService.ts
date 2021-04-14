@@ -2,12 +2,12 @@ import { getRepository } from 'typeorm';
 import Product from '@modules/products/infra/typeorm/entities/Product';
 import AppError from '../../../shared/error/AppError';
 
-interface Request {
+interface IRequest {
   product_id: string;
   quantity: number;
 }
 class UpdateProductsQuantityService {
-  public async execute({ product_id, quantity }: Request): Promise<Product> {
+  public async execute({ product_id, quantity }: IRequest): Promise<Product> {
     const productsRepository = getRepository(Product);
 
     const getProduct = await productsRepository.findOne(product_id);

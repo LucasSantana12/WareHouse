@@ -1,17 +1,17 @@
-import { getRepository } from 'typeorm';
 import AppError from '@shared/error/AppError';
 import Loan from '@modules/loans/infra/typeorm/entities/Loan';
+import LoanRepository from '../infra/typeorm/repositories/LoanRepositories';
 
-interface Request {
+interface IRequest {
   Loan_id: string;
   tomb: number;
 }
 
 class PutTombOnLoanService {
-  public async exceute({ Loan_id, tomb }: Request): Promise<Loan> {
-    const loansRepository = getRepository(Loan);
+  constructor(private loansRepository: LoanRepository) {}
 
-    const loan = await loansRepository.findOne(Loan_id);
+  public async execute({ Loan_id, tomb }: IRequest): Promise<Loan> {
+    const loan = await this.loansRepository.findById(Loan_id);
 
     if (!loan) {
       throw new AppError('Emprestimo nao encotrado', 403);
@@ -19,7 +19,7 @@ class PutTombOnLoanService {
 
     loan.tomb = tomb;
 
-    await loansRepository.save(loan);
+    await this.loansRepository.save(loan);
 
     return loan;
   }

@@ -3,22 +3,22 @@ import { sign } from 'jsonwebtoken';
 import User from '@modules/users/infra/typeorm/entities/User';
 import authConfig from '@config/auth';
 import AppError from '@shared/error/AppError';
-import IUserRepository from '../repositories/IUsersRepositories';
+import UsersRepository from '../repositories/IUsersRepositories';
 
-interface Request {
+interface IRequest {
   email: string;
   password: string;
 }
 
-interface Response {
+interface IResponse {
   user: User;
   token: string;
 }
 
 class AuthenticateUserService {
-  constructor(private usersRepository: IUserRepository) {}
+  constructor(private usersRepository: UsersRepository) {}
 
-  public async execute({ email, password }: Request): Promise<Response> {
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {

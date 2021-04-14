@@ -1,29 +1,28 @@
 import { hash } from 'bcryptjs';
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/error/AppError';
-import IUserRepository from '../repositories/IUsersRepositories';
+import UserRepository from '../infra/typeorm/repositories/UsersRepositories';
 
-interface Request {
+interface IRequest {
   name: string;
   email: string;
   password: string;
   matricula: number;
   admin?: boolean;
 }
-class UserRepository {
-  constructor(private usersRepository: IUserRepository) {}
+class CreateUserService {
+  constructor(private usersRepository: UserRepository) {}
 
   public async execute({
     name,
     email,
     password,
     matricula,
-  }: Request): Promise<User> {
+  }: IRequest): Promise<User> {
     const checkEmail = await this.usersRepository.findByEmail(email);
     if (checkEmail) {
       throw new AppError('Opa, esse email já existe');
     }
-
     const hashedPassword = await hash(password, 8);
 
     if (email === 'admin@admin.fucapi') {
@@ -49,4 +48,4 @@ class UserRepository {
   }
 }
 
-export default UserRepository;
+export default CreateUserService;

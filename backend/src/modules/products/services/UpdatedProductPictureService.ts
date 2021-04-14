@@ -4,13 +4,13 @@ import fs from 'fs';
 import Product from '@modules/products/infra/typeorm/entities/Product';
 import uploadConfig from '@config/upload';
 
-interface Request {
+interface IRequest {
   product_id: string;
   fileName: string;
 }
 
 class UpdatedProductPictureService {
-  public async execute({ product_id, fileName }: Request): Promise<Product> {
+  public async execute({ product_id, fileName }: IRequest): Promise<Product> {
     const productsRepository = getRepository(Product);
     const product = await productsRepository.findOne(product_id);
     console.log(product);

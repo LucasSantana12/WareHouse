@@ -6,6 +6,7 @@ import Loan from '@modules/loans/infra/typeorm/entities/Loan';
 import ensureAutheticated from '@modules/users/infra/http/middlewares/ensureAutheticated';
 import ensureAdminAutheticated from '@modules/users/infra/http/middlewares/ensureAdminAutheticated';
 import PutTombOnLoanService from '@modules/loans/services/PutTombOnLoanService';
+import LoanRepositories from '@modules/loans/infra/typeorm/repositories/LoanRepositories';
 
 const loansRouter = Router();
 
@@ -22,8 +23,9 @@ loansRouter.get('/', ensureAutheticated, async (request, response) => {
 
 loansRouter.post('/create', ensureAutheticated, async (request, response) => {
   const { qtd, user_id, product_id } = request.body;
+  const loansRepository = new LoanRepositories();
 
-  const createLoan = new CreateLoanService();
+  const createLoan = new CreateLoanService(loansRepository);
 
   const loan = await createLoan.execute({
     qtd,
@@ -40,8 +42,9 @@ loansRouter.patch(
   async (request, response) => {
     const { returned, product_id } = request.body;
     const { id } = request.params;
+    const loansRepository = new LoanRepositories();
 
-    const returnedService = new ReturnedLoanService();
+    const returnedService = new ReturnedLoanService(loansRepository);
 
     const loan = await returnedService.update({
       id,
@@ -57,10 +60,11 @@ loansRouter.patch(
   ensureAdminAutheticated,
   async (request, response) => {
     const { Loan_id, tomb } = request.body;
+    const loansRepository = new LoanRepositories();
 
-    const tombLoan = new PutTombOnLoanService();
+    const tombLoan = new PutTombOnLoanService(loansRepository);
 
-    const loan = await tombLoan.exceute({
+    const loan = await tombLoan.execute({
       Loan_id,
       tomb,
     });

@@ -2,15 +2,17 @@ import { getRepository } from 'typeorm';
 import Loan from '@modules/loans/infra/typeorm/entities/Loan';
 import Product from '@modules/products/infra/typeorm/entities/Product';
 import AppError from '@shared/error/AppError';
+import LoanRepository from '../infra/typeorm/repositories/LoanRepositories';
 
-interface Request {
+interface IRequest {
   id: string;
   returned: boolean;
   product_id: string;
 }
 class ReturnedLoanService {
-  public async update({ returned, product_id, id }: Request): Promise<Loan> {
-    const loansRepository = getRepository(Loan);
+  constructor(private loansRepository: LoanRepository) {}
+
+  public async update({ returned, product_id, id }: IRequest): Promise<Loan> {
     const productsRepository = getRepository(Product);
 
     /**
@@ -30,10 +32,13 @@ class ReturnedLoanService {
       throw new AppError('Produto não encontrado!', 403);
     }
 
-    const getLoan = await loansRepository.findOne(id);
+    const getLoan = await this.loansRepository.findById(id);
 
     if (!getLoan) {
       throw new AppError('Emprestimo não encontrado!', 403);
+    }
+    if (getLoan.returned) {
+      return getLoan;
     }
 
     const quantity = getProduct.quantity + getLoan.qtd;
@@ -44,7 +49,7 @@ class ReturnedLoanService {
 
     getLoan.returned = returned;
 
-    const loan = await loansRepository.save(getLoan);
+    const loan = await this.loansRepository.save(getLoan);
 
     return loan;
   }

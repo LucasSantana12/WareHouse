@@ -5,7 +5,7 @@ import authConfig from '@config/auth';
 import AppError from '@shared/error/AppError';
 import User from '@modules/users/infra/typeorm/entities/User';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -35,7 +35,7 @@ export default async function ensureAdminAutheticated(
   try {
     const decoded = verify(token, authConfig.jwt.secret);
 
-    const { sub } = decoded as TokenPayload;
+    const { sub } = decoded as ITokenPayload;
 
     request.user = {
       id: sub,

@@ -1,23 +1,22 @@
 import { Router } from 'express';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
-import IUserRepository from '@modules/users/infra/typeorm/repositories/UsersRepositories';
+import UserRepository from '@modules/users/infra/typeorm/repositories/UsersRepositories';
 
 const usersRouter = Router();
+
 usersRouter.post('/', async (request, response) => {
   const { name, email, password, matricula } = request.body;
-  const usersRepository = new IUserRepository();
+
+  const usersRepository = new UserRepository();
   console.log(request.body);
 
   const createUser = new CreateUserService(usersRepository);
 
   const user = await createUser.execute({
     name,
-
     email,
-
     matricula,
-
     password,
   });
 
