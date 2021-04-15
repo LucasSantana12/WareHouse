@@ -25,7 +25,7 @@ productsRouter.get('/', async (request, response) => {
   return response.json(products);
 });
 
-productsRouter.post('/', ensureAdminAutheticated, async (request, response) => {
+productsRouter.post('/', async (request, response) => {
   const { title, description, quantity, category } = request.body;
   const categoriesRepository = new CategoriesRepository();
   const productsRepository = new ProductsRepository();
