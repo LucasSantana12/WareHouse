@@ -3,7 +3,6 @@ import { getRepository, Repository } from 'typeorm';
 import IProductRepository from '@modules/products/repositories/IProductsRepositories';
 import ICreateProductDTO from '@modules/products/dtos/ICreateProductDTO';
 import Product from '@modules/products/infra/typeorm/entities/Product';
-import Loan from '@modules/loans/infra/typeorm/entities/Loan';
 
 class ProductsRepository implements IProductRepository {
   private ormRepository: Repository<Product>;
@@ -13,27 +12,37 @@ class ProductsRepository implements IProductRepository {
   }
 
   public async findById(id: string): Promise<Product | undefined> {
-    const loan = await this.ormRepository.findOne(id);
+    const product = await this.ormRepository.findOne(id);
 
-    return loan;
+    return product;
   }
 
   public async findByTitle(title: string): Promise<Product | undefined> {
-    const loan = await this.ormRepository.findOne({
+    const product = await this.ormRepository.findOne({
       where: { title },
     });
-    return loan;
+    return product;
   }
 
-  public async create(loanData: ICreateProductDTO): Promise<Loan> {
-    const loan = this.ormRepository.create(loanData);
+  public async create({
+    title,
+    description,
+    quantity,
+    category,
+  }: ICreateProductDTO): Promise<Product> {
+    const product = this.ormRepository.create({
+      title,
+      description,
+      quantity,
+      category,
+    });
 
-    await this.ormRepository.save(loan);
-    return loan;
+    await this.ormRepository.save(product);
+    return product;
   }
 
-  public async save(loan: Loan): Promise<Loan> {
-    return this.ormRepository.save(loan);
+  public async save(product: Product): Promise<Product> {
+    return this.ormRepository.save(product);
   }
 }
 

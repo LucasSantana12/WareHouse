@@ -3,6 +3,9 @@ import multer from 'multer';
 import { getRepository } from 'typeorm';
 import uploadConfig from '@config/upload';
 
+import CategoriesRepository from '@modules/categories/infra/typeorm/repositories/CategoryRepository';
+import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepositories';
+
 import ProductRepository from '@modules/products/infra/typeorm/entities/Product';
 
 import CreateProductService from '@modules/products/services/CreateProductService';
@@ -24,8 +27,13 @@ productsRouter.get('/', async (request, response) => {
 
 productsRouter.post('/', ensureAdminAutheticated, async (request, response) => {
   const { title, description, quantity, category } = request.body;
+  const categoriesRepository = new CategoriesRepository();
+  const productsRepository = new ProductsRepository();
 
-  const createProduct = new CreateProductService();
+  const createProduct = new CreateProductService(
+    productsRepository,
+    categoriesRepository,
+  );
 
   const product = await createProduct.execute({
     title,
@@ -46,7 +54,9 @@ productsRouter.patch(
   upload.single('file'),
   async (request, response) => {
     const { product_id } = request.params;
-    const updatedPicture = new UpdatedProductPictureService();
+    const productsRepository = new ProductsRepository();
+
+    const updatedPicture = new UpdatedProductPictureService(productsRepository);
 
     const product = await updatedPicture.execute({
       product_id,
@@ -62,8 +72,11 @@ productsRouter.patch(
   async (request, response) => {
     const { product_id } = request.params;
     const { quantity } = request.body;
+    const productsRepository = new ProductsRepository();
 
-    const UpdateQuantity = new UpdateProductsQuantityService();
+    const UpdateQuantity = new UpdateProductsQuantityService(
+      productsRepository,
+    );
 
     const product = await UpdateQuantity.execute({
       product_id,

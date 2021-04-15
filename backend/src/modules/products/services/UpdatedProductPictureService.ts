@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 import Product from '@modules/products/infra/typeorm/entities/Product';
 import uploadConfig from '@config/upload';
+import ProductsRepository from '../infra/typeorm/repositories/ProductsRepositories';
 
 interface IRequest {
   product_id: string;
@@ -10,10 +10,10 @@ interface IRequest {
 }
 
 class UpdatedProductPictureService {
+  constructor(private productsRepository: ProductsRepository) {}
+
   public async execute({ product_id, fileName }: IRequest): Promise<Product> {
-    const productsRepository = getRepository(Product);
-    const product = await productsRepository.findOne(product_id);
-    console.log(product);
+    const product = await this.productsRepository.findById(product_id);
 
     if (!product) {
       throw new Error('Product not finded');
@@ -34,7 +34,7 @@ class UpdatedProductPictureService {
 
     product.picture_id = fileName;
 
-    await productsRepository.save(product);
+    await this.productsRepository.save(product);
 
     return product;
   }

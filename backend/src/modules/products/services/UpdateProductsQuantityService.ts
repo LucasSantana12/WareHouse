@@ -1,16 +1,16 @@
-import { getRepository } from 'typeorm';
 import Product from '@modules/products/infra/typeorm/entities/Product';
 import AppError from '../../../shared/error/AppError';
+import ProductsRepository from '../infra/typeorm/repositories/ProductsRepositories';
 
 interface IRequest {
   product_id: string;
   quantity: number;
 }
 class UpdateProductsQuantityService {
-  public async execute({ product_id, quantity }: IRequest): Promise<Product> {
-    const productsRepository = getRepository(Product);
+  constructor(private productsRepository: ProductsRepository) {}
 
-    const getProduct = await productsRepository.findOne(product_id);
+  public async execute({ product_id, quantity }: IRequest): Promise<Product> {
+    const getProduct = await this.productsRepository.findById(product_id);
 
     if (!getProduct) {
       throw new AppError('Não foi possivel encontrar o produto', 403);
@@ -18,7 +18,7 @@ class UpdateProductsQuantityService {
 
     getProduct.quantity = quantity;
 
-    const product = await productsRepository.save(getProduct);
+    const product = await this.productsRepository.save(getProduct);
 
     return product;
   }

@@ -9,7 +9,7 @@ import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import logo from '../../assets/logoFucapi.svg';
+import logo from '../../assets/logo_dashboard.svg';
 import { Container, Content, Background, AnimationContainer } from './styles';
 import { useToast } from '../../hooks/toast';
 

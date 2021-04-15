@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: #c72828;
+  background: #006ba1;
   padding: 30px 0;
 
   header {
@@ -18,7 +18,7 @@ export const Container = styled.div`
           font-weight: 600;
           border-radius: 8px;
           border: 0;
-          background: #39b100;
+          background: #ffb500;
           color: #fff;
 
           display: flex;
@@ -32,7 +32,7 @@ export const Container = styled.div`
           .icon {
             display: flex;
             padding: 16px 16px;
-            background: #41c900;
+            background: #ffb660;
             border-radius: 0 8px 8px 0;
             margin: 0 auto;
           }

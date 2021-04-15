@@ -1,6 +1,6 @@
-import { getRepository } from 'typeorm';
-import Category from '@modules/categories/infra/typeorm/entities/Category';
 import Product from '@modules/products/infra/typeorm/entities/Product';
+import CategoriesRepository from '@modules/categories/infra/typeorm/repositories/CategoryRepository';
+import ProductsRepository from '../infra/typeorm/repositories/ProductsRepositories';
 
 interface IRequest {
   title: string;
@@ -10,26 +10,24 @@ interface IRequest {
 }
 
 class CreateProductService {
+  constructor(
+    private productsRepository: ProductsRepository,
+    private categoriesRepository: CategoriesRepository,
+  ) {}
+
   public async execute({
     title,
     description,
     quantity,
     category,
   }: IRequest): Promise<Product> {
-    const productsRepository = getRepository(Product);
-    const categoryRepository = getRepository(Category);
-
     // Criando a categoria
-    let productCategory = await categoryRepository.findOne({
-      where: {
-        title: category,
-      },
-    });
+    let productCategory = await this.categoriesRepository.findByTitle(category);
     if (!productCategory) {
-      productCategory = categoryRepository.create({
+      productCategory = await this.categoriesRepository.create({
         title: category,
       });
-      await categoryRepository.save(productCategory);
+      await this.categoriesRepository.save(productCategory);
     }
     // -------------------------------------------//
 
@@ -37,18 +35,14 @@ class CreateProductService {
      * Se um item com o mesmo nome for adicionado a tabela, uma nova Linha nao sera
      * criada e sim será atualizado a coluna de quantidade
      */
-    const getProduct = await productsRepository.findOne({
-      where: {
-        title,
-      },
-    });
+    const getProduct = await this.productsRepository.findByTitle(title);
 
     const productQuatity = getProduct?.quantity as number;
 
     if (getProduct) {
       getProduct.quantity = productQuatity + quantity;
 
-      const product = await productsRepository.save(getProduct);
+      const product = await this.productsRepository.save(getProduct);
 
       return product;
     }
@@ -57,14 +51,12 @@ class CreateProductService {
     /**
      * Criando o produto e salvando
      */
-    const product = productsRepository.create({
+    const product = await this.productsRepository.create({
       title,
       description,
       quantity,
       category: productCategory,
     });
-
-    await productsRepository.save(product);
 
     // ---------------------------------------//
     return product;

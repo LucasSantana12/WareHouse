@@ -23,7 +23,7 @@ const Header: React.FC<IHeaderProps> = ({ openModal }) => (
               /* TODO OPEN MODAL */
             }}
           >
-            <div className="text">Novo Prato</div>
+            <div className="text">Novo Pr </div>
 
             <div className="icon">
               <FiPlusSquare size={24} />
