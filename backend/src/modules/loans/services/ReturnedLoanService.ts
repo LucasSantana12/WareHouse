@@ -1,7 +1,6 @@
-import { getRepository } from 'typeorm';
 import Loan from '@modules/loans/infra/typeorm/entities/Loan';
-import Product from '@modules/products/infra/typeorm/entities/Product';
 import AppError from '@shared/error/AppError';
+import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepositories';
 import LoanRepository from '../infra/typeorm/repositories/LoanRepositories';
 
 interface IRequest {
@@ -10,11 +9,12 @@ interface IRequest {
   product_id: string;
 }
 class ReturnedLoanService {
-  constructor(private loansRepository: LoanRepository) {}
+  constructor(
+    private loansRepository: LoanRepository,
+    private productsRepository: ProductsRepository,
+  ) {}
 
   public async update({ returned, product_id, id }: IRequest): Promise<Loan> {
-    const productsRepository = getRepository(Product);
-
     /**
      * Somente o admin pode dar como devolvido o material,
      * a autenticação deverar ser feita atravez de um middleware de verificação
@@ -26,7 +26,7 @@ class ReturnedLoanService {
      * na coluna Quantity
      */
 
-    const getProduct = await productsRepository.findOne(product_id);
+    const getProduct = await this.productsRepository.findById(product_id);
 
     if (!getProduct) {
       throw new AppError('Produto não encontrado!', 403);
@@ -44,7 +44,7 @@ class ReturnedLoanService {
     const quantity = getProduct.quantity + getLoan.qtd;
     getProduct.quantity = quantity;
 
-    await productsRepository.save(getProduct);
+    await this.productsRepository.save(getProduct);
     // eslint-disable-next-line no-param-reassign
 
     getLoan.returned = returned;

@@ -7,6 +7,7 @@ import ensureAutheticated from '@modules/users/infra/http/middlewares/ensureAuth
 import ensureAdminAutheticated from '@modules/users/infra/http/middlewares/ensureAdminAutheticated';
 import PutTombOnLoanService from '@modules/loans/services/PutTombOnLoanService';
 import LoanRepositories from '@modules/loans/infra/typeorm/repositories/LoanRepositories';
+import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepositories';
 
 const loansRouter = Router();
 
@@ -43,8 +44,12 @@ loansRouter.patch(
     const { returned, product_id } = request.body;
     const { id } = request.params;
     const loansRepository = new LoanRepositories();
+    const productsRepository = new ProductsRepository();
 
-    const returnedService = new ReturnedLoanService(loansRepository);
+    const returnedService = new ReturnedLoanService(
+      loansRepository,
+      productsRepository,
+    );
 
     const loan = await returnedService.update({
       id,

@@ -10,7 +10,7 @@ interface IProductPlate {
   id: number;
   title: string;
   picture_id: string;
-  quantity: string;
+  quantity: number;
   description: string;
   category: string;
 }
@@ -18,7 +18,7 @@ interface IProductPlate {
 interface ICreateProductData {
   title: string;
   picture_id: string;
-  quantity: string;
+  quantity: number;
   description: string;
   category: string;
 }
@@ -48,7 +48,7 @@ const ModalAddProduct: React.FC<IModalProps> = ({
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <h1>Novo Prato</h1>
+        <h1>Novo Produto</h1>
 
         <Input name="title" placeholder="Notebook Dell" />
         <Input name="quantity" placeholder="Ex: 19" />

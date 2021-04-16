@@ -16,7 +16,7 @@ interface IProductPlate {
   id: number;
   title: string;
   picture_id: string;
-  quantity: string;
+  quantity: number;
   description: string;
   category: string;
 }
@@ -46,7 +46,9 @@ const Dashboard: React.FC = () => {
     product: Omit<IProductPlate, 'id'>,
   ): Promise<void> {
     try {
-      const response = await api.post('/products');
+      const response = await api.post('/products', {
+        ...product,
+      });
 
       setProducts([...products, response.data]);
     } catch (err) {

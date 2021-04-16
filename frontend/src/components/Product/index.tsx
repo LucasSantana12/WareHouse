@@ -8,7 +8,7 @@ interface IProductPlate {
   id: number;
   title: string;
   picture_id: string;
-  quantity: string;
+  quantity: number;
   description: string;
   category: string;
 }
