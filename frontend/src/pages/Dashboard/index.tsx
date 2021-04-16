@@ -93,7 +93,7 @@ const Dashboard: React.FC = () => {
           editingFood={editingFood}
         handleUpdateFood={handleUpdateFood}
         /> */}
-        <FoodsContainer data-testid="foods-list">
+        <FoodsContainer>
           {products &&
             products.map(product => (
               <Product
