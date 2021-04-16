@@ -48,7 +48,7 @@ const ModalAddProduct: React.FC<IModalProps> = ({
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <h1>Novo Prato</h1>
+        <h1>Novo Produto</h1>
 
         <Input name="title" placeholder="Notebook Dell" />
         <Input name="quantity" placeholder="Ex: 19" />
@@ -56,7 +56,7 @@ const ModalAddProduct: React.FC<IModalProps> = ({
         <Input name="description" placeholder="Descrição" />
         <Input name="category" placeholder="Categoria" />
 
-        <button type="submit" data-testid="add-food-button">
+        <button type="submit">
           <p className="text">Adicionar Produto</p>
           <div className="icon">
             <FiCheckSquare size={24} />

@@ -46,7 +46,9 @@ const Dashboard: React.FC = () => {
     product: Omit<IProductPlate, 'id'>,
   ): Promise<void> {
     try {
-      const response = await api.post('/products');
+      const response = await api.post('/products', {
+        ...product,
+      });
 
       setProducts([...products, response.data]);
     } catch (err) {
@@ -91,7 +93,7 @@ const Dashboard: React.FC = () => {
           editingFood={editingFood}
         handleUpdateFood={handleUpdateFood}
         /> */}
-        <FoodsContainer data-testid="foods-list">
+        <FoodsContainer>
           {products &&
             products.map(product => (
               <Product
