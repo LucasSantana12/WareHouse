@@ -4,7 +4,7 @@ Application developed to manage a warehouse, of a company (a school in this exam
 
 
 <h1 align="center">
-  <img alt="Logo" src="https://drive.google.com/drive/u/0/folders/1p3P9PbtDXnEk6vlqymKXZyFENV3iFIs5" width="200px">
+  <img alt="Logo" src="https://cloudinary.com/console/c-cad87e489a563bf8ddaf1f34c22ecb/media_library/folders/df5aa54788c71d7ec8b149a33d9531d8" width="200px">
 </h1>
 
 <h3 align="center">
