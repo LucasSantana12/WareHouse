@@ -75,11 +75,6 @@ $ git clone https://github.com/LucasSantana12/WareHouse.git
 # Install the dependencies
 $ yarn
 
-# Make a copy of '.env.example' to '.env'
-# and set with YOUR environment variables.
-# The aws variables do not need to be filled for dev environment
-$ cp .env.example .env
-
 # Create the instance of postgreSQL using docker
 $ docker run --name postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 
