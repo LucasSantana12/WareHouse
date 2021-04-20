@@ -51,7 +51,7 @@ Technologies that I used to develop this api
 
 ## 💻 Getting started
 
-Import the `Insomnia.json`(in main folder) on Insomnia App
+Import the `Insomnia.json`(in a backend/ folder) on Insomnia App
 
 ### Requirements
 
