@@ -17,7 +17,7 @@
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/EliasGcf/gobarber-api?color=%23FF9000">
 
   <a href="https://www.linkedin.com/in/lucas-da-silva-santana-00965017b/" target="_blank" rel="noopener noreferrer">
-    <img alt="Made by" src="https://img.shields.io/badge/made%20by-elias%20gabriel-%23FF9000">
+  <p>create by</p>
   </a>
 </p>
 
@@ -99,4 +99,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with 💜 &nbsp;by Elias Gabriel 👋 &nbsp;[See my linkedin](https://www.linkedin.com/in/eliasgcf/)
+Made with 💜 &nbsp;by Lucas Santana 👋 &nbsp;[See my linkedin](https://www.linkedin.com/in/lucas-da-silva-santana-00965017b/)
