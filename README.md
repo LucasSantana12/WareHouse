@@ -62,7 +62,7 @@ Import the `Insomnia.json`(in a backend/ folder) on Insomnia App
 
 > Obs.: I recommend use docker
 - [Docker](https://www.docker.com/get-started)
-- 
+- Postbird
 **Clone the project and access the folder**
 
 ```bash
@@ -77,6 +77,8 @@ $ yarn
 
 # Create the instance of postgreSQL using docker
 $ docker run --name postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+
+# On Postbird, create a database named "amox"
 
 # Once the services are running, run the migrations
 $ yarn typeorm migration:run
