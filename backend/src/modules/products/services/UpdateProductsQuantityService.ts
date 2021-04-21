@@ -1,11 +1,15 @@
 import Product from '@modules/products/infra/typeorm/entities/Product';
+
 import AppError from '../../../shared/error/AppError';
+
 import ProductsRepository from '../infra/typeorm/repositories/ProductsRepositories';
 
 interface IRequest {
   product_id: string;
+
   quantity: number;
 }
+
 class UpdateProductsQuantityService {
   constructor(private productsRepository: ProductsRepository) {}
 

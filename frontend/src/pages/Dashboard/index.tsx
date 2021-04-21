@@ -10,7 +10,7 @@ import ModalAddProduct from '../../components/ModalAddProduct';
 
 // import ModalEditFood from '../../components/ModalEditFood';
 
-import { FoodsContainer, Container } from './styles';
+import { ProductsContainer, Container } from './styles';
 
 interface IProductPlate {
   id: number;
@@ -93,7 +93,7 @@ const Dashboard: React.FC = () => {
           editingFood={editingFood}
         handleUpdateFood={handleUpdateFood}
         /> */}
-        <FoodsContainer>
+        <ProductsContainer>
           {products &&
             products.map(product => (
               <Product
@@ -103,7 +103,7 @@ const Dashboard: React.FC = () => {
                 handleEditFood={handleEditFood}
               />
             ))}
-        </FoodsContainer>
+        </ProductsContainer>
       </Container>
     </>
   );

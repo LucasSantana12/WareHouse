@@ -1,9 +1,12 @@
 import AppError from '@shared/error/AppError';
+
 import Loan from '@modules/loans/infra/typeorm/entities/Loan';
-import LoanRepository from '../infra/typeorm/repositories/LoanRepositories';
+
+import LoanRepository from '../infra/typeorm/repositories/LoansRepository';
 
 interface IRequest {
   Loan_id: string;
+
   tomb: number;
 }
 

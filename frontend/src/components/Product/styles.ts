@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   background: #f0f0f5;
   border-radius: 8px;
-  width: 350px;
+
+  justify-content: center;
+  align-items: center;
 
   header {
     background: #ffb84d;
@@ -14,7 +16,7 @@ export const Container = styled.div`
     text-align: center;
 
     img {
-      width: 350px;
+      width: 393px;
       pointer-events: none;
       user-select: none;
     }

@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
 import ILoanRepository from '@modules/loans/repositories/ILoansRepositories';
+
 import ICreateLoanDTO from '@modules/loans/dtos/ICreateLoanDTO';
 
 import Loan from '@modules/loans/infra/typeorm/entities/Loan';
@@ -22,6 +23,7 @@ class LoanRepository implements ILoanRepository {
     const loan = await this.ormRepository.findOne({
       where: { email },
     });
+
     return loan;
   }
 
@@ -29,6 +31,7 @@ class LoanRepository implements ILoanRepository {
     const loan = this.ormRepository.create(loanData);
 
     await this.ormRepository.save(loan);
+
     return loan;
   }
 
