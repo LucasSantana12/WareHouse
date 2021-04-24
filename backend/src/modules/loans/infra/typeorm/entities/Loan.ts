@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 
 import Product from '@modules/products/infra/typeorm/entities/Product';
+
 import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('loans')
