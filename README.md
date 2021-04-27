@@ -8,7 +8,7 @@
 </h1>
 
 <h3 align="center">
-  Express Application for GoBarber project
+  Express Application for Warehouse project
 </h3>
 
 <p align="center">The best way to schedule your service!</p>
