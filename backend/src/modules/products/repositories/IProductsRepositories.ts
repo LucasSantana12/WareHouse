@@ -8,6 +8,4 @@ export default interface IProductRepository {
   findByTitle(title: string): Promise<Product | undefined>;
 
   create(productData: ICreateProductDTO): Promise<Product>;
-
-  save(product: Product): Promise<Product>;
 }

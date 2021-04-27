@@ -33,8 +33,6 @@ class FakeLoanRepository implements ILoanRepository {
 
     return loan;
   }
-
-  public async save(loan: Loan): Promise<Loan> {}
 }
 
 export default FakeLoanRepository;

@@ -1,21 +1,23 @@
-import { getRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
 import Loan from '@modules/loans/infra/typeorm/entities/Loan';
-import Product from '@modules/products/infra/typeorm/entities/Product';
 import AppError from '@shared/error/AppError';
-import LoanRepository from '../infra/typeorm/repositories/LoansRepository';
+import IProductRepository from '@modules/products/repositories/IProductsRepositories';
+import ILoanRepository from '../repositories/ILoansRepositories';
 
 interface IRequest {
   qtd: number;
   user_id: string;
   product_id: string;
 }
-
+@injectable()
 class CreateLoanService {
-  constructor(private loansRepository: LoanRepository) {}
+  constructor(
+    @inject('LoanRepositiory')
+    private loansRepository: ILoanRepository,
+    private productsRepository: IProductRepository,
+  ) {}
 
   public async execute({ qtd, user_id, product_id }: IRequest): Promise<Loan> {
-    const productsRepository = getRepository(Product);
-
     /**
 
      * Regra de negocio para a quantidade de emprestimo.
@@ -34,7 +36,7 @@ class CreateLoanService {
 
      */
 
-    const getProduct = await productsRepository.findOne(product_id);
+    const getProduct = await this.productsRepository.findById(product_id);
 
     const productQuatity = getProduct?.quantity as number;
 
@@ -47,7 +49,7 @@ class CreateLoanService {
     } else {
       getProduct.quantity = productQuatity - qtd;
 
-      await productsRepository.save(getProduct);
+      await this.productsRepository.save(getProduct);
     }
 
     // ----------------------------------------------------//
