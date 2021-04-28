@@ -14,6 +14,7 @@ class CreateLoanService {
   constructor(
     @inject('LoanRepositiory')
     private loansRepository: ILoanRepository,
+    @inject('ProductsRepository')
     private productsRepository: IProductRepository,
   ) {}
 
@@ -46,11 +47,10 @@ class CreateLoanService {
 
     if (productQuatity < qtd) {
       throw new AppError('Não temos toda essa quantidade de estoque', 403);
-    } else {
-      getProduct.quantity = productQuatity - qtd;
-
-      await this.productsRepository.save(getProduct);
     }
+    getProduct.quantity = productQuatity - qtd;
+
+    await this.productsRepository.save(getProduct);
 
     // ----------------------------------------------------//
 

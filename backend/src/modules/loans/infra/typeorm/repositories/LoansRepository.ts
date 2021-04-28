@@ -27,10 +27,6 @@ class LoanRepository implements ILoanRepository {
   public async save(loan: Loan): Promise<Loan> {
     return this.ormRepository.save(loan);
   }
-
-  public async update(loan: Loan): Promise<Loan> {
-    throw new Error('Method not implemented.');
-  }
 }
 
 export default LoanRepository;

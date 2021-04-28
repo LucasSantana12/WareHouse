@@ -1,8 +1,11 @@
 import Product from '@modules/products/infra/typeorm/entities/Product';
 import CategoriesRepository from '@modules/categories/infra/typeorm/repositories/CategoryRepository';
+import ICategoryRepository from '@modules/categories/repositories/ICategoriesRepositories';
 import ProductsRepository from '../infra/typeorm/repositories/ProductsRepositories';
+import IProductRepository from '../repositories/IProductsRepositories';
 
 interface IRequest {
+  id?: string;
   title: string;
   description: string;
   quantity: number;
@@ -11,8 +14,8 @@ interface IRequest {
 
 class CreateProductService {
   constructor(
-    private productsRepository: ProductsRepository,
-    private categoriesRepository: CategoriesRepository,
+    private productsRepository: IProductRepository,
+    private categoriesRepository: ICategoryRepository,
   ) {}
 
   public async execute({
