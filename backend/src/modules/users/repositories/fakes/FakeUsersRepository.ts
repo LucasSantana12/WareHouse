@@ -25,7 +25,6 @@ class FakeUsersRepository implements IUserRepository {
     email,
     matricula,
     password,
-    admin,
   }: ICreateUserDTO): Promise<User> {
     const user = new User();
 
@@ -35,9 +34,8 @@ class FakeUsersRepository implements IUserRepository {
       email,
       password,
       matricula,
-      admin,
     });
-
+    this.Users.push(user);
     return user;
   }
 
