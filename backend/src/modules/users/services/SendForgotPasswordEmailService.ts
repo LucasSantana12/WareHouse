@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
-import IMailProvider from '@shared/container/MailProvider/models/IMailProvider';
+import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import AppError from '@shared/error/AppError';
 import IUserRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
@@ -8,6 +8,7 @@ import IUserTokensRepository from '../repositories/IUserTokensRepository';
 interface IRequest {
   email: string;
 }
+
 @injectable()
 class SendForgotPasswordEmailService {
   constructor(
@@ -15,7 +16,8 @@ class SendForgotPasswordEmailService {
     private usersRepository: IUserRepository,
     @inject('MailProvider')
     private mailProvider: IMailProvider,
-    @inject('UsertokensRepository')
+
+    @inject('UserTokensRepository')
     private userTokensRepository: IUserTokensRepository,
   ) {}
 
@@ -28,7 +30,7 @@ class SendForgotPasswordEmailService {
 
     await this.userTokensRepository.generate(checkUser.id);
 
-    this.mailProvider.sendMail(
+    await this.mailProvider.sendMail(
       email,
       'Pedido de recuperação de senha recebido',
     );
