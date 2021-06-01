@@ -5,7 +5,6 @@ export default class EtherealMailProvider implements IMailProvider {
   private client: Transporter;
 
   constructor() {
-    console.log('as');
     nodemailer.createTestAccount().then(account => {
       const transporter = nodemailer.createTransport({
         host: account.smtp.host,
@@ -23,11 +22,10 @@ export default class EtherealMailProvider implements IMailProvider {
   }
 
   public async sendMail(to: string, body: string): Promise<void> {
-    console.log('test');
     const message = await this.client.sendMail({
       from: 'Equipe Fucapi <noreply@fucapi.br>',
       to,
-      subject: 'REcuperação de senha',
+      subject: 'Recuperação de senha',
       text: body,
     });
 
