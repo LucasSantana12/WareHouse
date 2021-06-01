@@ -16,7 +16,6 @@ class SendForgotPasswordEmailService {
     private usersRepository: IUserRepository,
     @inject('MailProvider')
     private mailProvider: IMailProvider,
-
     @inject('UserTokensRepository')
     private userTokensRepository: IUserTokensRepository,
   ) {}

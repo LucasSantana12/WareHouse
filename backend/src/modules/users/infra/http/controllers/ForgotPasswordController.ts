@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { container } from 'tsyringe';
 
 import SendForgotPasswordEmailService from '@modules/users/services/SendForgotPasswordEmailService';
 import EtherealMailProvider from '@shared/container/providers/MailProvider/implementations/EtherealMailProvider';

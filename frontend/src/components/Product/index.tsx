@@ -5,9 +5,8 @@ import { FiEdit3, FiTrash } from 'react-icons/fi';
 import { Container } from './styles';
 
 interface IProductPlate {
-  id: number;
+  id: string;
   title: string;
-  picture_id: string;
   quantity: number;
   description: string;
   category: string;
@@ -16,9 +15,9 @@ interface IProductPlate {
 interface IProps {
   product: IProductPlate;
 
-  handleDelete: (id: number) => {};
+  handleDelete: (id: string) => {};
 
-  handleEditFood: (food: IProductPlate) => void;
+  handleEditProduct: (product: IProductPlate) => void;
 }
 
 const Product: React.FC<IProps> = ({
@@ -26,14 +25,19 @@ const Product: React.FC<IProps> = ({
 
   handleDelete,
 
-  handleEditFood,
+  handleEditProduct,
 }: IProps) => {
   async function toggleAvailable(): Promise<void> {
     // TODO UPDATE STATUS (available)
   }
 
-  function setEditingFood(): void {
-    // TODO - SET THE ID OF THE CURRENT ITEM TO THE EDITING FOOD AND OPEN MODAL
+  async function handleDeleteProduct(id: string): Promise<void> {
+    console.log(product.id);
+  }
+
+  function setEditingProduct(): void {
+    handleEditProduct(product);
+    console.log(product);
   }
 
   return (
@@ -60,10 +64,18 @@ const Product: React.FC<IProps> = ({
           <button
             type="button"
             className="icon"
-            onClick={() => setEditingFood()}
+            onClick={() => setEditingProduct()}
             data-testid={`edit-food-${product.id}`}
           >
             <FiEdit3 size={20} />
+          </button>
+          <button
+            type="button"
+            className="icon"
+            onClick={() => handleDeleteProduct(product.id)}
+            data-testid={`remove-product-${product.id}`}
+          >
+            <FiTrash size={20} />
           </button>
         </div>
       </section>

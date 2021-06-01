@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import { isCatchClause } from 'typescript';
 import Header from '../../components/Header';
 
 import api from '../../services/api';
@@ -8,14 +9,13 @@ import Product from '../../components/Product';
 
 import ModalAddProduct from '../../components/ModalAddProduct';
 
-// import ModalEditFood from '../../components/ModalEditFood';
+import ModalEditProduct from '../../components/ModalEditProduct';
 
 import { ProductsContainer, Container } from './styles';
 
 interface IProductPlate {
-  id: number;
+  id: string;
   title: string;
-  picture_id: string;
   quantity: number;
   description: string;
   category: string;
@@ -24,7 +24,7 @@ interface IProductPlate {
 const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<IProductPlate[]>([]);
 
-  const [editingFood, setEditingFood] = useState<IProductPlate>(
+  const [editingProduct, setEditingProduct] = useState<IProductPlate>(
     {} as IProductPlate,
   );
 
@@ -56,13 +56,29 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  async function handleUpdateFood(
+  async function handleUpdateProduct(
     product: Omit<IProductPlate, 'id'>,
   ): Promise<void> {
     // TODO UPDATE A FOOD PLATE ON THE API
+    try {
+      const response = await api.put(`/products/${editingProduct}`, {
+        ...editingProduct,
+        ...product,
+      });
+
+      setProducts(
+        products.map(mappedProduct =>
+          mappedProduct.id === editingProduct.id
+            ? { ...response.data }
+            : mappedProduct,
+        ),
+      );
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  async function handleDeleteFood(id: number): Promise<void> {
+  async function handleDeleteFood(id: string): Promise<void> {
     // TODO DELETE A FOOD PLATE FROM THE API
   }
 
@@ -74,8 +90,10 @@ const Dashboard: React.FC = () => {
     setEditModalOpen(!editModalOpen);
   }
 
-  function handleEditFood(food: IProductPlate): void {
+  function handleEditProduct(product: IProductPlate): void {
     // TODO SET THE CURRENT EDITING FOOD ID IN THE STATE
+    setEditingProduct(product);
+    toggleEditModal();
   }
 
   return (
@@ -87,12 +105,12 @@ const Dashboard: React.FC = () => {
           setIsOpen={toggleModal}
           handleAddProduct={handleAddProduct}
         />
-        {/* <ModalEditFood
+        <ModalEditProduct
           isOpen={editModalOpen}
           setIsOpen={toggleEditModal}
-          editingFood={editingFood}
-        handleUpdateFood={handleUpdateFood}
-        /> */}
+          editingProduct={editingProduct}
+          handleUpdateProduct={handleUpdateProduct}
+        />
         <ProductsContainer>
           {products &&
             products.map(product => (
@@ -100,7 +118,7 @@ const Dashboard: React.FC = () => {
                 key={product.id}
                 product={product}
                 handleDelete={handleDeleteFood}
-                handleEditFood={handleEditFood}
+                handleEditProduct={handleEditProduct}
               />
             ))}
         </ProductsContainer>
