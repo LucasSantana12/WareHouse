@@ -1,6 +1,8 @@
-import AppError from '@shared/error/AppError';
 import { injectable, inject } from 'tsyringe';
 import { isAfter, addHours } from 'date-fns';
+
+import AppError from '@shared/error/AppError';
+
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
@@ -16,23 +18,24 @@ class ResetPasswordService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('UserTokenRepository')
-    private userTokenRepository: IUserTokensRepository,
+    @inject('UserTokensRepository')
+    private userTokensRepository: IUserTokensRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
   ) {}
 
   public async execute({ token, password }: IRequest): Promise<void> {
-    const userToken = await this.userTokenRepository.findByToken(token);
+    const userToken = await this.userTokensRepository.findByToken(token);
 
     if (!userToken) {
-      throw new AppError('User token does not exist');
+      throw new AppError('User token does not exists');
     }
+
     const user = await this.usersRepository.findById(userToken.user_id);
 
     if (!user) {
-      throw new AppError('User does not exist');
+      throw new AppError('User does not exists');
     }
 
     const tokenCreatedAt = userToken.created_at;
