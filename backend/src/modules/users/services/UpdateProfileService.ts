@@ -26,10 +26,21 @@ class UpdateProfile {
 
   public async execute({ user_id, email, name }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
+
     if (!user) {
       throw new AppError('User not found');
     }
-    return user;
+
+    const userWithUpdateEmail = await this.usersRepository.findByEmail(email);
+
+    if (userWithUpdateEmail && userWithUpdateEmail.id !== user_id) {
+      throw new AppError('this email already exists.');
+    }
+
+    user.name = name;
+    user.email = email;
+
+    return this.usersRepository.save(user);
   }
 }
 
