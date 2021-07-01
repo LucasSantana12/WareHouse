@@ -16,6 +16,11 @@ productsRouter.get('/', productsController.show);
 
 productsRouter.post('/', productsController.create);
 
+productsRouter.put(
+  '/update',
+  ensureAdminAutheticated,
+  productsController.update,
+);
 productsRouter.patch(
   '/:id/picture',
   ensureAdminAutheticated,

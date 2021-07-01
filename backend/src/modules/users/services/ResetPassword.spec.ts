@@ -85,7 +85,7 @@ describe('ResetPassword', () => {
       return customDate.setHours(customDate.getHours() + 3);
     });
     await expect(
-      await resetPassword.execute({
+      resetPassword.execute({
         password: '123123',
         token,
       }),
