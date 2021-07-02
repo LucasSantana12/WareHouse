@@ -11,13 +11,13 @@
   Express Application for Warehouse project
 </h3>
 
-<p align="center">The best way to schedule your service!</p>
+<p align="center">The best way to organize your products!</p>
 
 <p align="center">
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/EliasGcf/gobarber-api?color=%23FF9000">
 
   <a href="https://www.linkedin.com/in/lucas-da-silva-santana-00965017b/" target="_blank" rel="noopener noreferrer">
-  <p>create by</p>
+  <p>create by Lucas Santana</p>
   </a>
 </p>
 
