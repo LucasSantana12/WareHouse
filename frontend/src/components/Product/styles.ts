@@ -30,7 +30,13 @@ export const Container = styled.div`
       color: #3d3d4d;
       margin-top: 16px;
     }
-    .price {
+    .description {
+      max-width: 100px; // Limite maximo do texto
+      white-space: nowrap; // Removendo quebra de linha
+      overflow: hidden; // Removendo a barra de rolagem
+      text-overflow: ellipsis; // Adicionando "..." ao final do texto
+    }
+    .quantity {
       font-style: normal;
       font-size: 24px;
       line-height: 34px;

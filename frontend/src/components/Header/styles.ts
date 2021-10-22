@@ -12,6 +12,23 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    a {
+      font-weight: 600;
+      border-radius: 8px;
+      border: 0;
+      background: #006ba1;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      padding: 16px 24px;
+      transition: 1s;
+    }
+    a:hover {
+      background: #005ba1;
+    }
 
     nav {
       div {

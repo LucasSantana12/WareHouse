@@ -1,9 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
-
 import IProductRepository from '@modules/products/repositories/IProductsRepositories';
-
 import ICreateProductDTO from '@modules/products/dtos/ICreateProductDTO';
-
 import Product from '@modules/products/infra/typeorm/entities/Product';
 
 class ProductsRepository implements IProductRepository {
@@ -15,7 +12,6 @@ class ProductsRepository implements IProductRepository {
 
   public async findById(id: string): Promise<Product | undefined> {
     const product = await this.ormRepository.findOne(id);
-
     return product;
   }
 
@@ -29,20 +25,14 @@ class ProductsRepository implements IProductRepository {
 
   public async create({
     title,
-
     description,
-
     quantity,
-
     category,
   }: ICreateProductDTO): Promise<Product> {
     const product = this.ormRepository.create({
       title,
-
       description,
-
       quantity,
-
       category,
     });
 

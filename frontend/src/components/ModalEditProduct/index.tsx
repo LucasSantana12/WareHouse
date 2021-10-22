@@ -5,6 +5,8 @@ import { FormHandles } from '@unform/core';
 import { Form } from './styles';
 import Modal from '../Modal';
 import Input from '../Input';
+import TextArea from '../TextArea';
+import Select from '../Select';
 
 interface IProductPlate {
   id: string;
@@ -12,12 +14,13 @@ interface IProductPlate {
   quantity: number;
   description: string;
   category: string;
+  created_at: string;
 }
 
 interface IModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
-  handleUpdateProduct: (food: Omit<IProductPlate, 'id'>) => void;
+  handleUpdateProduct: (food: Omit<IProductPlate, 'id' | 'created_at'>) => void;
   editingProduct: IProductPlate;
 }
 
@@ -26,6 +29,7 @@ interface IEditProductData {
   quantity: number;
   description: string;
   category: string;
+  created_at: string;
 }
 
 const ModalEditProduct: React.FC<IModalProps> = ({
@@ -51,11 +55,15 @@ const ModalEditProduct: React.FC<IModalProps> = ({
         <Input name="title" placeholder="Notebook Dell" />
         <Input name="quantity" placeholder="Ex: 19" />
 
-        <Input name="description" placeholder="Descrição" />
-        <Input name="category" placeholder="Categoria" />
+        <TextArea name="description" placeholder="Descrição" />
+        <Select name="category" placeholder="Categoria">
+          <option>Selecione um categoria</option>
+          <option value="informática">informática</option>
+          <option value="mecânica">Mecânica</option>
+        </Select>
 
         <button type="submit">
-          <p className="text">Adicionar Produto</p>
+          <p className="text">Editar Produto</p>
           <div className="icon">
             <FiCheckSquare size={24} />
           </div>

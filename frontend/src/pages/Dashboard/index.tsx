@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 
-import { isCatchClause } from 'typescript';
 import Header from '../../components/Header';
 
 import api from '../../services/api';
@@ -11,7 +11,9 @@ import ModalAddProduct from '../../components/ModalAddProduct';
 
 import ModalEditProduct from '../../components/ModalEditProduct';
 
-import { ProductsContainer, Container } from './styles';
+import { Container, Table } from './styles';
+import { ProductsTable } from '../../components/ProductsTable';
+import ModalGetProduct from '../../components/ModalGetProduct';
 
 interface IProductPlate {
   id: string;
@@ -19,6 +21,7 @@ interface IProductPlate {
   quantity: number;
   description: string;
   category: string;
+  created_at: string;
 }
 
 const Dashboard: React.FC = () => {
@@ -27,10 +30,14 @@ const Dashboard: React.FC = () => {
   const [editingProduct, setEditingProduct] = useState<IProductPlate>(
     {} as IProductPlate,
   );
+  const [getingProduct, setGetingProduct] = useState<IProductPlate>(
+    {} as IProductPlate,
+  );
 
   const [modalOpen, setModalOpen] = useState(false);
 
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [getModalOpen, setGetModalOpen] = useState(false);
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
@@ -43,7 +50,7 @@ const Dashboard: React.FC = () => {
   }, []);
 
   async function handleAddProduct(
-    product: Omit<IProductPlate, 'id'>,
+    product: Omit<IProductPlate, 'id' | 'created_at'>,
   ): Promise<void> {
     try {
       const response = await api.post('/products', {
@@ -57,7 +64,7 @@ const Dashboard: React.FC = () => {
   }
 
   async function handleUpdateProduct(
-    product: Omit<IProductPlate, 'id'>,
+    product: Omit<IProductPlate, 'id' | 'created_at'>,
   ): Promise<void> {
     // TODO UPDATE A FOOD PLATE ON THE API
     try {
@@ -78,10 +85,6 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  async function handleDeleteFood(id: string): Promise<void> {
-    // TODO DELETE A FOOD PLATE FROM THE API
-  }
-
   function toggleModal(): void {
     setModalOpen(!modalOpen);
   }
@@ -89,40 +92,72 @@ const Dashboard: React.FC = () => {
   function toggleEditModal(): void {
     setEditModalOpen(!editModalOpen);
   }
+  function toggleGetModal(): void {
+    setGetModalOpen(!getModalOpen);
+  }
 
   function handleEditProduct(product: IProductPlate): void {
     // TODO SET THE CURRENT EDITING FOOD ID IN THE STATE
     setEditingProduct(product);
     toggleEditModal();
   }
+  function handleGetProduct(product: IProductPlate): void {
+    // TODO SET THE CURRENT EDITING FOOD ID IN THE STATE
+    setGetingProduct(product);
+    toggleGetModal();
+  }
 
   return (
     <>
-      <Container>
-        <Header openModal={toggleModal} />
-        <ModalAddProduct
-          isOpen={modalOpen}
-          setIsOpen={toggleModal}
-          handleAddProduct={handleAddProduct}
-        />
-        <ModalEditProduct
-          isOpen={editModalOpen}
-          setIsOpen={toggleEditModal}
-          editingProduct={editingProduct}
-          handleUpdateProduct={handleUpdateProduct}
-        />
-        <ProductsContainer>
-          {products &&
-            products.map(product => (
-              <Product
-                key={product.id}
-                product={product}
-                handleDelete={handleDeleteFood}
-                handleEditProduct={handleEditProduct}
-              />
-            ))}
-        </ProductsContainer>
-      </Container>
+      <Header openModal={toggleModal} />
+      <ModalAddProduct
+        isOpen={modalOpen}
+        setIsOpen={toggleModal}
+        handleAddProduct={handleAddProduct}
+      />
+      <ModalEditProduct
+        isOpen={editModalOpen}
+        setIsOpen={toggleEditModal}
+        handleUpdateProduct={handleUpdateProduct}
+        editingProduct={editingProduct}
+      />
+      <ModalGetProduct
+        isOpen={getModalOpen}
+        setIsOpen={toggleGetModal}
+        getingProduct={getingProduct}
+        handleUpdateProduct={handleUpdateProduct}
+        handleEditProduct={handleEditProduct}
+      />
+      <Container />
+      <Table>
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Quantidade</th>
+              <th>Data de cadastro</th>
+              <th>Categoria</th>
+              <th>Editar</th>
+            </tr>
+            <tbody>
+              {products &&
+                products.map(product => (
+                  // <Product
+                  //   key={product.id}
+                  //   product={product}
+                  //   handleEditProduct={handleEditProduct}
+                  //   />
+                  <ProductsTable
+                    key={product.id}
+                    product={product}
+                    handleEditProduct={handleEditProduct}
+                    handleGetProduct={handleGetProduct}
+                  />
+                ))}
+            </tbody>
+          </thead>
+        </table>
+      </Table>
     </>
   );
 };

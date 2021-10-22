@@ -20,7 +20,7 @@ class UpdateProductsQuantityService {
       throw new AppError('Não foi possivel encontrar o produto', 403);
     }
 
-    getProduct.quantity = quantity;
+    getProduct.quantity += quantity;
 
     const product = await this.productsRepository.save(getProduct);
 

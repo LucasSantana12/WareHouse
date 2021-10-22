@@ -4,11 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
 } from 'typeorm';
-
-import Category from '@modules/categories/infra/typeorm/entities/Category';
 
 @Entity('products')
 class Product {
@@ -24,12 +20,8 @@ class Product {
   @Column()
   quantity: number;
 
-  @ManyToOne(() => Category)
-  @JoinColumn({ name: 'category_id' })
-  category: Category;
-
   @Column()
-  category_id: string;
+  category: string;
 
   @Column()
   picture_id: string;

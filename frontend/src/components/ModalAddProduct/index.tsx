@@ -5,6 +5,8 @@ import { FormHandles } from '@unform/core';
 import { Form } from './styles';
 import Modal from '../Modal';
 import Input from '../Input';
+import TextArea from '../TextArea';
+import Select from '../Select';
 
 interface IProductPlate {
   id: number;
@@ -26,7 +28,7 @@ interface ICreateProductData {
 interface IModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
-  handleAddProduct: (food: Omit<IProductPlate, 'id'>) => void;
+  handleAddProduct: (product: Omit<IProductPlate, 'id'>) => void;
 }
 
 const ModalAddProduct: React.FC<IModalProps> = ({
@@ -50,11 +52,22 @@ const ModalAddProduct: React.FC<IModalProps> = ({
       <Form ref={formRef} onSubmit={handleSubmit}>
         <h1>Novo Produto</h1>
 
+        <h3>Titulo</h3>
         <Input name="title" placeholder="Notebook Dell" />
-        <Input name="quantity" placeholder="Ex: 19" />
+        <h3>Quantidade</h3>
+        <Input name="quantity" type="number" placeholder=" Ex: 19" />
+        <h3>Descrição</h3>
 
-        <Input name="description" placeholder="Descrição" />
-        <Input name="category" placeholder="Categoria" />
+        <TextArea
+          name="description"
+          placeholder="Sistema Operacional: Windows 10 ..."
+        />
+        <h3>Categoria</h3>
+        <Select name="category" placeholder="Categoria">
+          <option>Selecione uma categoria</option>
+          <option value="informática">informática</option>
+          <option value="mecânica">Mecânica</option>
+        </Select>
 
         <button type="submit">
           <p className="text">Adicionar Produto</p>

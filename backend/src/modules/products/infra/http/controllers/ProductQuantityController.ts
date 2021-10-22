@@ -1,5 +1,7 @@
 import UpdateProductsQuantityService from '@modules/products/services/UpdateProductsQuantityService';
+
 import { Request, Response } from 'express';
+
 import ProductsRepository from '../../typeorm/repositories/ProductsRepositories';
 
 export default class ProductQuantityController {

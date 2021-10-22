@@ -5,9 +5,12 @@ export default class AddPictureFiledToProduct1616977571454
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'products',
+
       new TableColumn({
         name: 'picture_id',
+
         type: 'varchar',
+
         isNullable: true,
       }),
     );

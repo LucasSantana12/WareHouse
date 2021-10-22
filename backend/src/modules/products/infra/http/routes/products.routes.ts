@@ -21,6 +21,7 @@ productsRouter.put(
   ensureAdminAutheticated,
   productsController.update,
 );
+
 productsRouter.patch(
   '/:id/picture',
   ensureAdminAutheticated,

@@ -1,19 +1,27 @@
 import { inject, injectable } from 'tsyringe';
+
 import Loan from '@modules/loans/infra/typeorm/entities/Loan';
+
 import AppError from '@shared/error/AppError';
+
 import IProductRepository from '@modules/products/repositories/IProductsRepositories';
+
 import ILoanRepository from '../repositories/ILoansRepositories';
 
 interface IRequest {
   qtd: number;
+
   user_id: string;
+
   product_id: string;
 }
+
 @injectable()
 class CreateLoanService {
   constructor(
     @inject('LoanRepositiory')
     private loansRepository: ILoanRepository,
+
     @inject('ProductsRepository')
     private productsRepository: IProductRepository,
   ) {}
@@ -21,19 +29,35 @@ class CreateLoanService {
   public async execute({ qtd, user_id, product_id }: IRequest): Promise<Loan> {
     /**
 
+
+
      * Regra de negocio para a quantidade de emprestimo.
 
+
+
      *
+
+
 
      * se o cliente pedir uma quantidade maior que temos em estoque,
 
+
+
      * esse erro será apresentado.
+
+
 
      *
 
+
+
      * se nao, a tabela de quantidade do produtos será atualizada,
 
+
+
      * subitraindo o valor pedido pelo ja existente
+
+
 
      */
 
@@ -48,6 +72,7 @@ class CreateLoanService {
     if (productQuatity < qtd) {
       throw new AppError('Não temos toda essa quantidade de estoque', 403);
     }
+
     getProduct.quantity = productQuatity - qtd;
 
     await this.productsRepository.save(getProduct);

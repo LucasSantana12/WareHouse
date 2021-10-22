@@ -1,14 +1,21 @@
 import AppError from '@shared/error/AppError';
+
 import { inject, injectable } from 'tsyringe';
+
 import Product from '../infra/typeorm/entities/Product';
+
 import IProductRepository from '../repositories/IProductsRepositories';
 
 interface IRequest {
   products_id: string;
+
   title?: string;
+
   description: string;
+
   quantity: number;
-  category?: string;
+
+  category: string;
 }
 
 @injectable()
@@ -20,9 +27,13 @@ class UpdateProduct {
 
   public async execute({
     products_id,
+
     title,
+
     description,
+
     quantity,
+
     category,
   }: IRequest): Promise<Product> {
     const product = await this.productsRepository.findById(products_id);
@@ -42,6 +53,8 @@ class UpdateProduct {
     product.title = title!;
 
     product.description = description;
+
+    product.category = category;
 
     product.quantity = quantity;
 

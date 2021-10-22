@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface IProductPlate {
   id: number;
 
@@ -16,7 +17,7 @@ interface IProductPlate {
 }
 
 interface IModalProps {
-  children: any;
+  children: unknown;
   isOpen: boolean;
   setIsOpen: () => void;
 }

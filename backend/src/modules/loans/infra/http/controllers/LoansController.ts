@@ -9,17 +9,21 @@ import LoansRepository from '../../typeorm/repositories/LoansRepository';
 export default class LoansController {
   public async show(request: Request, response: Response): Promise<Response> {
     const loansRepository = getRepository(Loan);
+
     const usersRepository = getRepository(User);
 
     const user = await usersRepository.findOne(request.user.id);
+
     if (!user?.admin) {
       const loans = await loansRepository.find({
         where: {
           user_id: request.user.id,
         },
       });
+
       return response.json(loans);
     }
+
     const loans = await loansRepository.find({
       order: { updated_at: 'DESC' },
     });
@@ -32,11 +36,13 @@ export default class LoansController {
 
     const loansRepository = new LoansRepository();
 
-    const createLoan = new CreateLoanService(loansRepository);
+    const createLoan = new CreateLoanService(loansRepository.create);
 
     const loan = await createLoan.execute({
       qtd,
+
       user_id,
+
       product_id,
     });
 

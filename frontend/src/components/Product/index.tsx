@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react';
 
 import { FiEdit3, FiTrash } from 'react-icons/fi';
 
@@ -10,34 +11,18 @@ interface IProductPlate {
   quantity: number;
   description: string;
   category: string;
+  created_at: string;
 }
 
 interface IProps {
   product: IProductPlate;
 
-  handleDelete: (id: string) => {};
-
   handleEditProduct: (product: IProductPlate) => void;
 }
 
-const Product: React.FC<IProps> = ({
-  product,
-
-  handleDelete,
-
-  handleEditProduct,
-}: IProps) => {
-  async function toggleAvailable(): Promise<void> {
-    // TODO UPDATE STATUS (available)
-  }
-
-  async function handleDeleteProduct(id: string): Promise<void> {
-    console.log(product.id);
-  }
-
+const Product: React.FC<IProps> = ({ product, handleEditProduct }: IProps) => {
   function setEditingProduct(): void {
     handleEditProduct(product);
-    console.log(product);
   }
 
   return (
@@ -52,9 +37,9 @@ const Product: React.FC<IProps> = ({
       <section className="body">
         <h2>{product.title}</h2>
 
-        <p>{product.description}</p>
+        <p className="description">{product.description}</p>
 
-        <p className="price">
+        <p className="quantity">
           <b>Quantidade disponivel:{product.quantity}</b>
         </p>
       </section>
@@ -68,14 +53,6 @@ const Product: React.FC<IProps> = ({
             data-testid={`edit-food-${product.id}`}
           >
             <FiEdit3 size={20} />
-          </button>
-          <button
-            type="button"
-            className="icon"
-            onClick={() => handleDeleteProduct(product.id)}
-            data-testid={`remove-product-${product.id}`}
-          >
-            <FiTrash size={20} />
           </button>
         </div>
       </section>

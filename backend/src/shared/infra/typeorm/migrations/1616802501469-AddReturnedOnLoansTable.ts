@@ -5,10 +5,14 @@ export default class AddReturnedOnLoansTable1616802501469
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'loans',
+
       new TableColumn({
         name: 'returned',
+
         type: 'boolean',
+
         default: false,
+
         isNullable: true,
       }),
     );
