@@ -67,6 +67,8 @@ const ModalAddProduct: React.FC<IModalProps> = ({
           <option>Selecione uma categoria</option>
           <option value="informática">informática</option>
           <option value="mecânica">Mecânica</option>
+          <option value="robótica">Robótica</option>
+          <option value="eletrônica">Eletrônica</option>
         </Select>
 
         <button type="submit">

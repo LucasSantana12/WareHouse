@@ -9,8 +9,10 @@ export const Container = styled.div`
 
 export const Table = styled.div`
   margin-top: 1rem;
+  padding-bottom: 22rem;
   width: auto;
   justify-content: center;
+
   background-color: var(--background);
   height: 100%;
   table {
@@ -64,6 +66,7 @@ export const Table = styled.div`
       border: 0;
       cursor: pointer;
       margin-left: 10px;
+      transition: filter 0.2s ease-in-out;
 
       &:first-child {
         color: var(--text-title);
@@ -78,6 +81,9 @@ export const Table = styled.div`
       & + button {
         margin-left: 6px;
       }
+    }
+    button:hover {
+      filter: brightness(0.9);
     }
   }
 `;
